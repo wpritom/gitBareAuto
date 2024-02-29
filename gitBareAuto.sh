@@ -36,10 +36,12 @@ check_directory $projectPath
 cd $projectPath
 git init --bare  $repoName.git
 
-text="git --work-tree=$path/$repoName --git-dir=$path/$repoName.git checkout -f main"
+text="git --work-tree=$projectPath/$repoName --git-dir=$projectPath/$repoName.git checkout -f main"
 postHookPath="$projectPath/$repoName.git/hooks/post-receive"
+workTreePath="$projectPath/$repoName"
+echo " --- Creating Work Tree at $workTreePath"
+check_directory $workTreePath
 echo " --- Creating post-receive hook | Directory: $postHookPath"
-# check_directory $postHookPath
 echo "$text" > "$postHookPath"
 
 chmod +x "$postHookPath"
